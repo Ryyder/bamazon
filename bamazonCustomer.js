@@ -55,6 +55,16 @@ const prompts = () => {
     .then(function(answer) {
       var newStock = 0;
       var itemID = answer.id - 1;
+      var itemName = res[itemID].product_name;
+      var quantity = answer.units;
+      var price = res[itemID].price.toPrecision(3);
+      var grandTotal;
+
+      console.log("item name: " +  itemName);
+
+      console.log("you want to buy: " + quantity);
+
+      console.log("price of this item is: " + price + " per unit");
 
       console.log("you chose item id: " + res[itemID].item_id);
       
@@ -72,24 +82,33 @@ const prompts = () => {
       }
       else {
         //update the database with the new quantity
-        connection.query(
+        var query = connection.query(
           "UPDATE products SET ? WHERE ?",
           [
             {
               stock_quantity: newStock
             },
             {
-              item_id: itemID
+              product_name: itemName
             }
           ],
           function(err) {
             if (err) throw err;
-             console.log("hello"); 
-             connection.end();
+            grandTotal = total(quantity, price);
+
+            console.log("total price is: " + grandTotal);
+            console.log(query.sql); 
+            connection.end();
           }
         );
       }
 
     });
   });
+}
+
+const total = (quantity, price) => {
+  var calc;
+  calc = quantity * price;
+  return calc.toPrecision(3);
 }
