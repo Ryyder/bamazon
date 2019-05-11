@@ -131,8 +131,66 @@ const addInv = () => {
   });
 }
 
-
+//add products into our database
 const addProd = () => {
-
+  inquirer
+  .prompt([
+    {
+      //prompt user for product name
+      name: "prodName",
+      type: "input",
+      message: "Enter the name of the item you want to add"
+    },
+    {
+      //prompt user for dept name
+      name: "deptName",
+      type: "input",
+      message: "Enter the department in which the item belongs"
+    },
+    {
+      //prompt user for price
+      name: "price",
+      type: "input",
+      message: "Enter the price of the item",
+      validate: function (value) {
+        if (isNaN(value) === false) {
+          return true;
+        }
+        return false;
+      }
+    },
+    {
+      //prompt user for quantity
+      name: "quantity",
+      type: "input",
+      message: "Enter the quantity of the item"
+    }
+  ])
+  .then(function(answer) {
+    
+    //save our prompt answers into variables
+    var prodName = answer.prodName;
+    var deptName = answer.deptName;
+    var prodPrice = parseFloat(answer.price).toPrecision(3);
+    var quant = parseInt(answer.quantity);
+    
+    //our insert query
+    var query = connection.query(
+      "INSERT INTO products SET ?",
+      {
+        product_name: prodName,
+        department_name: deptName,
+        price: prodPrice,
+        stock_quantity: quant
+      },
+      function(err, res) {
+        if (err) throw err;
+        console.log(res.affectedRows + " product inserted");
+      }
+    );
+    console.log(query.sql);
+    //return to the start of the program
+    managerStart();
+  });
 }
 
