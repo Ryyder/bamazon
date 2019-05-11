@@ -20,7 +20,6 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   prompts();
-  //connection.end();
 });
 
 const prompts = () => {
@@ -59,28 +58,23 @@ const prompts = () => {
       var quantity = answer.units;
       var price = res[itemID].price.toPrecision(3);
       var grandTotal;
-
-      console.log("item name: " +  itemName);
-
-      console.log("you want to buy: " + quantity);
-
-      console.log("price of this item is: " + price + " per unit");
-
-      console.log("you chose item id: " + res[itemID].item_id);
       
       //subtracing current stock quantity - the amount user entered
+      
+
+      //if the user's choice is > than the stock quantity, give them an error or user tries to purchase a product with 0 quantity. return flow to the top of the program
+      if((answer.units > res[itemID].stock_quantity) || (res[itemID.stock_quantity] == 0)) {
+        console.log("Insufficient quantity!");
+        prompts();
+      }
+      else {
+
       newStock = parseInt(res[itemID].stock_quantity) - parseInt(answer.units);
 
       console.log("old stock quantity: " + parseInt(res[itemID].stock_quantity));
 
       console.log("new stock quantity: " + newStock);
 
-      //if the user's choice is > than the stock quantity, give them an error and return flow to the top of the program
-      if(answer.units > res[itemID].stock_quantity) {
-        console.log("Insufficient quantity!");
-        /* prompts(); */
-      }
-      else {
         //update the database with the new quantity
         var query = connection.query(
           "UPDATE products SET ? WHERE ?",
@@ -95,7 +89,6 @@ const prompts = () => {
           function(err) {
             if (err) throw err;
             grandTotal = total(quantity, price);
-
             console.log("total price is: " + grandTotal);
             console.log(query.sql); 
             connection.end();
@@ -107,6 +100,7 @@ const prompts = () => {
   });
 }
 
+//function to calculate the total price of item item and quantity purchased
 const total = (quantity, price) => {
   var calc;
   calc = quantity * price;
