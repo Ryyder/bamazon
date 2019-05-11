@@ -58,9 +58,7 @@ const prompts = () => {
       var quantity = answer.units;
       var price = res[itemID].price.toPrecision(3);
       var grandTotal;
-      
-      //subtracing current stock quantity - the amount user entered
-      
+        
 
       //if the user's choice is > than the stock quantity, give them an error or user tries to purchase a product with 0 quantity. return flow to the top of the program
       if((answer.units > res[itemID].stock_quantity) || (res[itemID.stock_quantity] == 0)) {
@@ -69,6 +67,7 @@ const prompts = () => {
       }
       else {
 
+      //subtracing current stock quantity - the amount user entered
       newStock = parseInt(res[itemID].stock_quantity) - parseInt(answer.units);
 
       console.log("old stock quantity: " + parseInt(res[itemID].stock_quantity));
