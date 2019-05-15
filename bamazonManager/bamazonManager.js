@@ -1,3 +1,4 @@
+//requires for our node app
 var inquirer = require("inquirer");
 var mysql = require("mysql");
 var cTable = require("console.table");
@@ -186,11 +187,12 @@ const addProd = () => {
       function(err, res) {
         if (err) throw err;
         console.log(res.affectedRows + " product inserted");
+        managerStart();
       }
     );
     console.log(query.sql);
     //return to the start of the program
-    managerStart();
+    
   });
 }
 
