@@ -74,11 +74,15 @@ const prompts = () => {
 
       console.log("new stock quantity: " + newStock);
 
+      grandTotal = parseFloat(total(quantity, price));
+      console.log("total price is: " + grandTotal);
+
         //update the database with the new quantity
         var query = connection.query(
           "UPDATE products SET ? WHERE ?",
           [
             {
+              product_sales: grandTotal,
               stock_quantity: newStock
             },
             {
@@ -87,8 +91,6 @@ const prompts = () => {
           ],
           function(err) {
             if (err) throw err;
-            grandTotal = total(quantity, price);
-            console.log("total price is: " + grandTotal);
             console.log(query.sql); 
             connection.end();
           }
