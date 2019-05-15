@@ -51,14 +51,16 @@ Using bamazonSupervisor.js allows the user to view product sales, overhead costs
 Here are some video recorded samples with each app
 
 - bamazonCustomer.js
-
+- `https://drive.google.com/file/d/1KVfwUqGy_kUQloFAnkEMxwjWP6V-e1lQ/view`
 
 
 - bamazonManager.js
+- `https://drive.google.com/file/d/18PVIMd-vdeDo_gNOhQczwEaczafbz5am/view`
 
 
 
 - bamazonSupervisor.js
+- `https://drive.google.com/file/d/1Vqubl3IgTijxHqH0EcU5R9AagNG-35gr/view`
 
 
 
