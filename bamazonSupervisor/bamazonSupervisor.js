@@ -19,6 +19,7 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
+//open our connection to the sql database
 connection.connect(function(err) {
   if (err) throw err;
   supervisor();
@@ -52,7 +53,7 @@ const prodSales = () => {
   //this query joins the products and departments table on department_name (identical column names in both tables). From there, we sum the total of the product_sales from the products table and subtract that value from the overhead_cost from departments table
   var query = "select departments.id, departments.department_name, departments.overhead_cost as overhead_cost, sum(products.product_sales) as product_sales, sum(product_sales) - overhead_cost as total_profit from departments inner join products on departments.department_name = products.department_name group by departments.department_name";
 
-  //our query
+  //our query that calculates the profit
   connection.query(query, function(err, res) {
     if (err) throw err;
     //output our query

@@ -17,11 +17,14 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
+//open our connection to the sql database
 connection.connect(function(err) {
   if (err) throw err;
   prompts();
 });
 
+
+//prompts for our user to enter in data
 const prompts = () => {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;

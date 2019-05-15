@@ -18,6 +18,7 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
+//open our connection to the sql database
 connection.connect(function(err) {
   if (err) throw err;
   managerStart();
